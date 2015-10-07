@@ -37,7 +37,7 @@ int main()
 	for(i=0; i<LINE_NUM; i++)
 		selfSet[i]=(char *)malloc(sizeof(char)*(STR_LENGTH+1));
 
-	loadSelfSet("D:/workspace/rAdjust/randomized/sample", selfSet);
+	loadSelfSet("./randomized/sample", selfSet);
 	ma=rcmax-r1min+1;
 
 	initMat();
@@ -53,7 +53,7 @@ int main()
 		matrix[tag-r1min]+=1;
 	}
 
-	fout=fopen("D:/workspace/rAdjust/randomized/case2.out","w");
+	fout=fopen("./randomized/case2.out","w");
 	for(r=r1min; r<=rcmax; r++)
 		printf("r=%d      %d\n", r, matrix[r-r1min]);
 	for(r=r1min; r<=rcmax; r++)
