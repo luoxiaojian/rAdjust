@@ -74,9 +74,9 @@ void rAlgo()
 	char filename[32];
 	FILE *fout, *fNS;
 	int i, r, flag, j, count=0;
-	sprintf(filename, "output_%d_%d.dat", START, END);
+	sprintf(filename, "./deterministic/output_%d_%d.dat", START, END);
 	fout=fopen(filename, "w");
-	fNS=fopen("nonSelf", "w");
+	fNS=fopen("./determinstic/nonSelf", "w");
 	for(i=START; i<END; i++)
 	{
 		if(i%10000==0)
@@ -119,7 +119,7 @@ void rAlgo()
 
 int main()
 {
-	char *filename="D:/workspace/rAdjust/deterministic/sample";
+	char *filename="./deterministic/sample";
 	loadSelfSet(filename);
 	rAlgo();
 	return 0;

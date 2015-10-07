@@ -1,11 +1,13 @@
 #include "rAlgo.h"
 
-#define EXP_TIME 1000
+#define NS_SIZE 1000
 
 char **selfSet;
 char **detector;
+char **nSelf;
 int *rvals;
-int *dnum={200, 400, 600, 800, 1100, 1200}, dtimes=6;
+int dnum[6]={200, 400, 600, 800, 1100, 1200};
+int dtimes=6;
 
 int getDetector(int r1, int rc, char *str)
 {
@@ -26,69 +28,72 @@ void initDet(int r1, int rc)
 	{
 		r=getDetector(r1, rc, detector[i]);
 		rvals[i]=r;
-	}
-}
-
-int checkSelfSet(char *str)
-{
-	int i, j, flag;
-	for(i=0; i<LINE_NUM; i++)
-	{
-		flag=1;
-		for(j=0; j<STR_LENGTH; j++)
+		if(i%10==0)
 		{
-			if(str[j]!=selfSet[i][j])
-			{
-				flag=0;
-				break;
-			}
+			printf("%d------------------->%d\n", rc, i);
+			fflush(stdout);
 		}
-		if(flag==1)
-			return 1;
 	}
-	return 0;
 }
 
-float calcPs(int num)
+int calcPs(int num)
 {
-	char temp[STR_LENGTH+1];
 	int i, j, count=0, flag;
-	for(i=0; i<EXP_TIME; i++)
+	for(i=0; i<NS_SIZE; i++)
 	{
 		flag=0;
-		generateRandStr(temp);
 		for(j=0; j<num; j++)
 		{
-			if(match(detector[i], temp, rvals[i]))
+			if(match(detector[j], nSelf[i], rvals[j]))
 			{
 				count+=1;
 				flag=1;
 				break;
 			}
 		}
-		if(flag==0)
-		{
-			if(checkSelfSet(temp))
-				count+=1;
-		}
 	}
-	return ((float)count)/((float)EXP_TIME);
+	return count;
+}
+
+int inSelf(char *str)
+{
+	int i, j, flag;
+	for(i=0; i<LINE_NUM; i++)
+	{
+		flag=0;
+		for(j=0; j<STR_LENGTH; j++)
+		{
+			if(str[j]!=selfSet[i][j])
+			{
+				flag=1;
+				break;
+			}
+		}
+		if(flag==0)
+			return 1;
+	}
+	return 0;
+}
+
+void generateNS()
+{
+	int i;
+	char *tmp;
+	for(i=0; i<NS_SIZE; i++)
+	{
+		tmp=nSelf[i];
+		generateRandStr(tmp);
+		while(inSelf(tmp))
+			generateRandStr(tmp);
+	}
 }
 
 int main(int argc, char **argv)
 {
-	int i, r, tag, rc, rcmin, rcmax, j;
+	int i, r, tag, rc, j, tmp;
 	FILE *fout;
 
-	if(argc<3)
-	{
-		printf("Usage: ./case2 <rc_min> <rc_max>\n");
-		exit(0);
-	}
-
-
-	rcmin=atoi(argv[1]);
-	rcmax=atoi(argv[2]);
+	srand((unsigned)time(NULL));
 
 	selfSet=(char **)malloc(sizeof(char *)*LINE_NUM);
 	for(i=0; i<LINE_NUM; i++)
@@ -97,17 +102,27 @@ int main(int argc, char **argv)
 	rvals=(int *)malloc(sizeof(int)*1200);
 	for(i=0; i<1200; i++)
 		detector[i]=(char *)malloc(sizeof(char)*(STR_LENGTH+1));
+	nSelf=(char **)malloc(sizeof(char *)*NS_SIZE);
+	for(i=0; i<NS_SIZE; i++)
+		nSelf[i]=(char *)malloc(sizeof(char)*(STR_LENGTH+1));
 
-	loadSelfSet("sample", selfSet);
+	loadSelfSet("./randomized/sample", selfSet);
 
-	for(rc=rcmin; rc<rcmax; rc++)
+	generateNS();
+
+	fout=fopen("./randomized/case3.out", "w");
+	for(rc=r1min; rc<=rcmax; rc++)
 	{
-		initDet(rcmin, rc);
+		initDet(r1min, rc);
 		for(j=0; j<dtimes; j++)
-			printf("rc=%d, nr0=%d, ps=%f\n", rc, dnum[j], calcPs(dnum[j]));
+		{
+			tmp=calcPs(dnum[j]);
+			printf("rc=%d, nr0=%d, ps=%d\n", rc, dnum[j], tmp);
+			fprintf(fout, "rc=%d, nr0=%d, ps=%d\n", rc, dnum[j], tmp);
+		}
 
 	}
-
-
+	fflush(fout);
+	fclose(fout);
 	return 0;
 }

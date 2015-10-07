@@ -8,7 +8,7 @@ int generateRand(int start, int end)
 void generateRandStr(char *str)
 {
 	int bit, i;
-	srand((unsigned)time(NULL));
+
 	for(i=0; i<STR_LENGTH; i++)
 	{
 		bit=generateRand(0,2);

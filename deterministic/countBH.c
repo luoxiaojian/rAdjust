@@ -212,9 +212,9 @@ int main()
 {
 	int i, j, len, r;
 	FILE *fout;
-	loadSets("D:/workspace/rAdjust/deterministic/sample", "D:/workspace/rAdjust/output_0_4194304.dat");
+	loadSets("./deterministic/sample", "./deterministic/output_0_4194304.dat");
 	tagToken();
 	generateTokens();
-	generateBH("D:/workspace/rAdjust/deterministic/bhList.dat");
+	generateBH("./deterministic/bhList.dat");
 	return 0;
 }

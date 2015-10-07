@@ -36,11 +36,13 @@ int main()
 
 	FILE *fout;
 
+	srand((unsigned)time(NULL));
+
 	selfSet=(char **)malloc(sizeof(char *)*LINE_NUM);
 	for(i=0; i<LINE_NUM; i++)
 		selfSet[i]=(char *)malloc(sizeof(char)*(STR_LENGTH+1));
 
-	loadSelfSet("D:/workspace/rAdjust/randomized/sample", selfSet);
+	loadSelfSet("./randomized/sample", selfSet);
 	ma=rcmax-r1min+1;
 
 	initMat();
@@ -69,13 +71,13 @@ int main()
 		}
 	}
 
-	fout=fopen("D:/workspace/rAdjust/randomized/case1.out","w");
+	fout=fopen("./randomized/case1.out","w");
 	for(rc=r1min; rc<=rcmax; rc++)
 		for(r=r1min; r<=rc; r++)
 			printf("r=%d, rc=%d      %d\n", r, rc, matrix[r-r1min][rc-r1min]);
 	for(rc=r1min; rc<=rcmax; rc++)
 		for(r=r1min; r<=rc; r++)
-			fprintf(fout, "r=%d, rc=%d      %d\n", r, rc, matrix[r-r1min][r-r1min]);
+			fprintf(fout, "r=%d, rc=%d      %d\n", r, rc, matrix[r-r1min][rc-r1min]);
 	fflush(fout);
 	fclose(fout);
 

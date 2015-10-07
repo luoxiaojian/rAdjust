@@ -3,7 +3,7 @@ RM:=rm -rf
 
 #all: rAlgo countBH case1 test
 
-all: case2
+all: case3
 #clean:
 #	$(RM) case1 case2 case3
 	
@@ -17,8 +17,8 @@ test: ./randomized/rAlgo.c ./randomized/test.c
 case2: ./randomized/rAlgo.c ./randomized/case2.c
 	$(CC) ./randomized/rAlgo.c ./randomized/case2.c -o ./randomized/case2
 	
-#case3: ./randomized/rAlgo.c ./randomized/case3.c
-#	$(CC) ./randomized/rAlgo.c ./randomized/case3.c -o ./binary/case3
+case3: ./randomized/rAlgo.c ./randomized/case3.c
+	$(CC) ./randomized/rAlgo.c ./randomized/case3.c -o ./randomized/case3
 	
 rAlgo: ./deterministic/rAlgo.c
 	$(CC) ./deterministic/rAlgo.c -o ./deterministic/rAlgo

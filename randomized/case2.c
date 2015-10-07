@@ -31,6 +31,8 @@ int main()
 	int i, r, tag;
 	FILE *fout;
 
+	srand((unsigned)time(NULL));
+
 	selfSet=(char **)malloc(sizeof(char *)*LINE_NUM);
 	for(i=0; i<LINE_NUM; i++)
 		selfSet[i]=(char *)malloc(sizeof(char)*(STR_LENGTH+1));
