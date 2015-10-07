@@ -116,16 +116,6 @@ void tagToken()
 		detector=nSelfSet[i];
 		tagOn(r, detector);
 	}
-/*	for(i=0; i<C; i++)
-	{
-		r=R1+i;
-		len=1<<r;
-		printf("%d  :", r);
-		for(j=0; j<len; j++)
-			if(lists[i][j])
-				printf("%d ", j);
-		printf("\n");
-	}*/
 }
 
 void generateTokens()
@@ -150,7 +140,6 @@ void generateTokens()
 			}
 		}
 	}
-//	printf("there are %d tokens\n", tokenNum);
 }
 
 int matchint(int num1, int num2, int r)
@@ -205,7 +194,6 @@ void generateBH(char *filename)
 				fflush(fout);
 		}
 	}
-//	printf("Total num is %d\n", count);
 }
 
 int main()

@@ -104,6 +104,7 @@ void rAlgo()
 				{
 					count=0;
 					printf("======================>flush\n");
+					fflush(stdout);
 					fflush(fout);
 				}
 				fprintf(fout, "%d\t%d\n", r, i);
