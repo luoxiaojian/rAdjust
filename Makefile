@@ -1,18 +1,12 @@
 CC:=gcc
 RM:=rm -rf
 
-#all: rAlgo countBH case1 test
-
-all: case3
-#clean:
-#	$(RM) case1 case2 case3
+all: rAlgo countBH case1 case2 case3
+clean:
+	$(RM) case1 case2 case3
 	
 case1: ./randomized/rAlgo.c ./randomized/case1.c
 	$(CC) ./randomized/rAlgo.c ./randomized/case1.c -o ./randomized/case1
-	
-	
-test: ./randomized/rAlgo.c ./randomized/test.c
-	$(CC) ./randomized/rAlgo.c ./randomized/test.c -o ./randomized/test
 	
 case2: ./randomized/rAlgo.c ./randomized/case2.c
 	$(CC) ./randomized/rAlgo.c ./randomized/case2.c -o ./randomized/case2
